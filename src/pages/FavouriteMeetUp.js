@@ -1,9 +1,12 @@
 function FavouriteMeetup(){
     return(
-        <>
-        <h1>Favourite Meetups</h1>
-        </>
+        <div>
+            <h1>
+            Favourite Meetups
+            </h1>
+   
+        </div>
     )
 }
 
-export default FavouriteMeetUp
+export default FavouriteMeetup
