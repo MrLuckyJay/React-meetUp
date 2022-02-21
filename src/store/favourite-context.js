@@ -1,39 +1,45 @@
-import {creaateContext,useState} from 'react'
+import { createContext, useState } from 'react';
 
+const FavoritesContext = createContext({
+  favorites: [],
+  totalFavorites: 0,
+  addFavorite: (favoriteMeetup) => {},
+  removeFavorite: (meetupId) => {},
+  itemIsFavorite: (meetupId) => {}
+});
 
-const FavouriteContext = creaateContext({
-    favourites:[],
-    totalFavourites:0
-})
+export function FavoritesContextProvider(props) {
+  const [userFavorites, setUserFavorites] = useState([]);
 
-function FavouriteContextProvider(props){
-const [userFavourite,setUserFavourite] = useState()
+  function addFavoriteHandler(favoriteMeetup) {
+    setUserFavorites((prevUserFavorites) => {
+      return prevUserFavorites.concat(favoriteMeetup);
+    });
+  }
 
-    function addFavouriteHandler(favouriteMeetup){
-        setUserFavourite((previousUserFavourite)=>{
-           return previousUserFavourite.concat(favouriteMeetup)
-        })
-    }
+  function removeFavoriteHandler(meetupId) {
+    setUserFavorites(prevUserFavorites => {
+      return prevUserFavorites.filter(meetup => meetup.id !== meetupId);
+    });
+  }
 
-    function removeFavouriteHandler(meetUpiD){
-        setUserFavourite(previousUserFavourite=>{
-            return previousUserFavourite.filter(meetup => meetup.id !== meetUpiD)
-        })
-    }
+  function itemIsFavoriteHandler(meetupId) {
+    return userFavorites.some(meetup => meetup.id === meetupId);
+  }
 
-    function itemIsFavouriteHandler(meetUpiD){
-        return userFavourite.some(meetup =>meetup.id === meetUpiD)
-    }
+  const context = {
+    favorites: userFavorites,
+    totalFavorites: userFavorites.length,
+    addFavorite: addFavoriteHandler,
+    removeFavorite: removeFavoriteHandler,
+    itemIsFavorite: itemIsFavoriteHandler
+  };
 
-    const context = {
-        favourites : userFavourite,
-        totalFavourites:userFavourite.length,
-        addFavourite:addFavouriteHandler,
-        removeFavourite:removeFavouriteHandler,
-        fouriteItem:itemIsFavouriteHandler,
-    }
-
-    return <FavouriteContext.Provider value={context}>
-        {props.children}
-    </FavouriteContext.Provider>
+  return (
+    <FavoritesContext.Provider value={context}>
+      {props.children}
+    </FavoritesContext.Provider>
+  );
 }
+
+export default FavoritesContext;

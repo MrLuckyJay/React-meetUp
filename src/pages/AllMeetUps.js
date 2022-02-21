@@ -39,7 +39,7 @@ function AllMeetUps(){
       <h1>All Meetups</h1>
       <div className={classes.container}>
       {loadMeetup.map((meetup)=>{
-         return <Meetup image={meetup.image} title={meetup.title} address={meetup.address} description={meetup.description} key={meetup.id}/>
+         return <Meetup image={meetup.image} title={meetup.title} address={meetup.address} description={meetup.description} id={meetup.id} key={meetup.id}/>
          
       })}
       </div>
